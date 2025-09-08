@@ -1,6 +1,8 @@
 # SmartLoan – Credit-Risk Prediction, Governance & Monitoring Dashboard
 
- A lightweight, end-to-end credit-risk prediction and monitoring app built with Streamlit.It generates loan default predictions (Logistic Regression & XGBoost), and demonstrates practical model governance: drift tracking (PSI), performance metrics (AUC/KS), explainability (SHAP), fairness testing (80% rule with group cut-offs), and compliance-style reporting (rule-based + optional LLM summary for executives).
+A **lightweight, end-to-end credit-risk prediction and monitoring app** built with **Streamlit**.  
+It generates **loan default predictions (Logistic Regression & XGBoost)**, and demonstrates **practical model governance**: **drift tracking (PSI)**, **performance metrics (AUC/KS)**, **explainability (SHAP)**, **fairness testing (80% rule with group cut-offs)**, and **compliance-style reporting** (rule-based + optional **LLM summary for executives**).
+
 
 ## What problem does this solve?
 Financial institutions face both decision-making risks and regulatory/reputational risks if their credit-risk models are **not accurate, monitored, explainable, and fair**.
