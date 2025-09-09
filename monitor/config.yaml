@@ -1,0 +1,34 @@
+
+run_name: "daily_batch"
+
+# 漂移 & 效能門檻
+psi_threshold_warn: 0.1
+psi_threshold_alert: 0.2
+auc_drop_alert: 0.05
+ks_drop_alert: 0.10
+missing_rate_alert: 0.10
+
+# 監控欄位
+features:
+  numerical: ["int_rate", "dti", "fico_mid", "installment_to_income","log_loan_amnt","log_annual_inc","credit_history_length"]
+  categorical: ["grade", "home_ownership", "term"]
+
+# baseline 效能指標
+baseline:
+  roc_auc: 0.709
+  ks: 0.31
+
+# 公平性檢查
+fairness:
+  group_col: "income_group_auth"
+  p80_rule_enforce: true
+  min_group_size: 200
+
+# 輸出 & 紀錄
+report:
+  out_dir: "monitor/reports"
+log_csv: "monitor/metrics_log.csv"
+
+# （可選）資料來源
+data_source:
+  daily_file_pattern: "data/new_batch_*.csv"
