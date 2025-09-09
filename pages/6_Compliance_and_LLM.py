@@ -8,9 +8,11 @@ import argparse
 from openai import OpenAI
 import streamlit as st
 import glob
-from dotenv import load_dotenv
-load_dotenv()  
-
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
 
 
