@@ -33,15 +33,50 @@ if st.button("Run Monitor"):
 
 # Show latest batch summary
 batch_log = "monitor/batch_metrics_log.csv"
+
+# 顯示最新批次摘要
 if os.path.exists(batch_log) and os.path.getsize(batch_log) > 0:
     df = pd.read_csv(batch_log)
     last = df.tail(1).copy()
 
-    # 統一所有數值欄位小數點 3 位
-    last = last.round(3)
+    # 依欄位型態/名稱設定小數位
+    num_cols = last.select_dtypes(include="number").columns.tolist()
+    # 預設 3 位小數
+    last[num_cols] = last[num_cols].round(3)
+    # 例外：非常小的比率/缺失率保留 4 位
+    col_4dp = [c for c in num_cols if "rate" in c.lower()]  # e.g. max_missing_rate
+    if col_4dp:
+        last[col_4dp] = last[col_4dp].round(4)
+    # 若有明確欄位名也可指定
+    for c in ["psi_max_value"]:
+        if c in last.columns:
+            last[c] = last[c].round(3)
 
-    # 輸出成 JSON（易讀）
+    # 解析 top_drift_json 並限制 psi 為 3 位小數
+    if "top_drift_json" in last.columns:
+        try:
+            # 將字符串解析為 JSON 列表
+            drift_data = json.loads(last["top_drift_json"].iloc[0])
+            # 對 PSI 值進行 3 位小數處理
+            for item in drift_data:
+                if "psi" in item:
+                    item["psi"] = round(float(item["psi"]), 3)
+            last["top_drift_json"] = [drift_data]  # 存為列表
+        except json.JSONDecodeError as e:
+            st.warning(f"Failed to parse top_drift_json: {e}")
+            last["top_drift_json"] = last["top_drift_json"]  # 保留原始字符串
+
+    # 轉為字典並格式化數值為 3 位小數
     last_rec = last.to_dict(orient="records")[0]
+    for key, value in last_rec.items():
+        if isinstance(value, (int, float)):
+            last_rec[key] = round(value, 3)
+        elif key == "top_drift_json" and isinstance(value, list):
+            for item in value[0]:  # 因為 value 是 [drift_data]
+                if "psi" in item:
+                    item["psi"] = round(float(item["psi"]), 3)
+
+    # 顯示摘要
     st.subheader("Latest batch summary:")
     st.json(last_rec)
 else:
