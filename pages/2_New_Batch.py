@@ -1,8 +1,7 @@
 # pages/2_New_Batch.py
-import os, sys, subprocess
+import os, sys, subprocess, json
 import pandas as pd
 import streamlit as st
-import json
 
 st.title("New Batch / Monitoring")
 
@@ -34,50 +33,55 @@ if st.button("Run Monitor"):
 
 # Show latest batch summary
 batch_log = "monitor/batch_metrics_log.csv"
-
-# 顯示最新批次摘要
 if os.path.exists(batch_log) and os.path.getsize(batch_log) > 0:
     df = pd.read_csv(batch_log)
     last = df.tail(1).copy()
 
-    # 依欄位型態/名稱設定小數位
-    num_cols = last.select_dtypes(include="number").columns.tolist()
-    # 預設 3 位小數
-    last[num_cols] = last[num_cols].round(3)
-    # 例外：非常小的比率/缺失率保留 4 位
-    col_4dp = [c for c in num_cols if "rate" in c.lower()]  # e.g. max_missing_rate
-    if col_4dp:
-        last[col_4dp] = last[col_4dp].round(4)
-    # 若有明確欄位名也可指定
-    for c in ["psi_max_value"]:
-        if c in last.columns:
-            last[c] = last[c].round(3)
+    # 1) 所有數值欄位統一 3 位小數
+    last = last.round(3)
 
-    # 解析 top_drift_json 並限制 psi 為 3 位小數
-    if "top_drift_json" in last.columns:
+    # 2) 安全處理 top_drift_json（把 psi 改為 3 位小數）
+    def _safe_float(x):
         try:
-            # 將字符串解析為 JSON 列表
-            drift_data = json.loads(last["top_drift_json"].iloc[0])
-            # 對 PSI 值進行 3 位小數處理
-            for item in drift_data:
-                if "psi" in item:
-                    item["psi"] = round(float(item["psi"]), 3)
-            last["top_drift_json"] = [drift_data]  # 存為列表
-        except json.JSONDecodeError as e:
-            st.warning(f"Failed to parse top_drift_json: {e}")
-            last["top_drift_json"] = last["top_drift_json"]  # 保留原始字符串
+            if pd.isna(x):
+                return None
+        except Exception:
+            pass
+        try:
+            return float(str(x).strip())
+        except Exception:
+            return None
 
-    # 轉為字典並格式化數值為 3 位小數
+    def _round_psi_in_drift(value):
+        """value 可能是字串(JSON)或 list[dict]，將其中 'psi' 轉為 3 位小數"""
+        if value is None or (isinstance(value, float) and pd.isna(value)):
+            return value
+
+        # 轉成 Python 物件
+        obj = value
+        if isinstance(value, str):
+            try:
+                obj = json.loads(value)
+            except Exception:
+                return value  # 不是合法 JSON，維持原樣
+
+        # 只處理 list[dict] 形態
+        if isinstance(obj, list):
+            for it in obj:
+                if isinstance(it, dict) and "psi" in it:
+                    f = _safe_float(it["psi"])
+                    if f is not None:
+                        it["psi"] = round(f, 3)
+            return obj  # 保持為物件，st.json 會比較好讀
+        return value
+
+    if "top_drift_json" in last.columns:
+        last.loc[last.index[-1], "top_drift_json"] = _round_psi_in_drift(
+            last.loc[last.index[-1], "top_drift_json"]
+        )
+
+    # 3) 輸出
     last_rec = last.to_dict(orient="records")[0]
-    for key, value in last_rec.items():
-        if isinstance(value, (int, float)):
-            last_rec[key] = round(value, 3)
-        elif key == "top_drift_json" and isinstance(value, list):
-            for item in value[0]:  # 因為 value 是 [drift_data]
-                if "psi" in item:
-                    item["psi"] = round(float(item["psi"]), 3)
-
-    # 顯示摘要
     st.subheader("Latest batch summary:")
     st.json(last_rec)
 else:
