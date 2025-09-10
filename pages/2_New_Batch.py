@@ -32,32 +32,17 @@ if st.button("Run Monitor"):
             st.error(res.stderr)
 
 # Show latest batch summary
-
 batch_log = "monitor/batch_metrics_log.csv"
 if os.path.exists(batch_log) and os.path.getsize(batch_log) > 0:
     df = pd.read_csv(batch_log)
     last = df.tail(1).copy()
 
-    # 依欄位型態/名稱設定小數位
-    num_cols = last.select_dtypes(include="number").columns.tolist()
+    # 統一所有數值欄位小數點 3 位
+    last = last.round(3)
 
-    # 預設 3 位小數
-    last[num_cols] = last[num_cols].round(3)
-
-    # 例外：非常小的比率/缺失率保留 4 位；PSI 可 3 位
-    col_4dp = [c for c in num_cols if "rate" in c.lower()]  # e.g. max_missing_rate
-    if col_4dp:
-        last[col_4dp] = last[col_4dp].round(4)
-
-    # 若有明確欄位名也可指定
-    for c in ["psi_max_value"]:
-        if c in last.columns:
-            last[c] = last[c].round(3)
-
-    # 轉 dict 並用 st.json 輸出（更易讀）
+    # 輸出成 JSON（易讀）
     last_rec = last.to_dict(orient="records")[0]
     st.subheader("Latest batch summary:")
     st.json(last_rec)
 else:
     st.info("Run the monitor to generate batch_metrics_log.csv.")
-
