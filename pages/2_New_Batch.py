@@ -70,13 +70,20 @@ if os.path.exists(MONITOR_LOG) and os.path.getsize(MONITOR_LOG) > 0:
                 st.warning("top_drift_json is not a list. Using empty list.")
                 drift_data = []
             for item in drift_data:
-                if "psi" in item and item["psi"] is not None:
-                    try:
-                        item["psi"] = round(float(item["psi"]), 3)
-                    except (ValueError, TypeError) as e:
-                        st.warning(f"Invalid psi value in {item}: {e}. Skipping.")
+                if isinstance(item, dict):  # 確保 item 是字典
+                    st.write(f"Debug: Processing item = {item}")  # 除錯用
+                    if "psi" in item and item["psi"] is not None:
+                        try:
+                            psi_value = float(item["psi"])  # 嘗試轉換為浮點數
+                            item["psi"] = round(psi_value, 3)  # 限制為 3 位小數
+                        except (ValueError, TypeError) as e:
+                            st.warning(f"Invalid psi value in {item}: {e}. Setting to 0.0.")
+                            item["psi"] = 0.0  # 後備值
+                    else:
+                        st.warning(f"Missing or null psi in {item}. Setting to 0.0.")
+                        item["psi"] = 0.0  # 後備值
                 else:
-                    st.warning(f"Missing or null psi in {item}. Skipping.")
+                    st.warning(f"Invalid item type in drift_data: {item}. Skipping.")
             last["top_drift_json"] = [drift_data]
         except json.JSONDecodeError as e:
             st.error(f"Invalid JSON in top_drift_json: {e}")
