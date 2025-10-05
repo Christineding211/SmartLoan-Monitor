@@ -1,7 +1,9 @@
 # SmartLoan – Credit-Risk Prediction, Governance & Monitoring Dashboard
 
-A **lightweight, end-to-end credit-risk prediction and monitoring app** built with **Streamlit**.  
-It generates **loan default predictions (Logistic Regression & XGBoost)**, and demonstrates **practical model governance**: **drift tracking (PSI)**, **performance metrics (AUC/KS)**, **explainability (SHAP)**, **fairness testing (80% rule with group cut-offs)**, and **compliance-style reporting** (rule-based + optional **LLM summary for executives**).
+A lightweight, end-to-end credit-risk prediction and monitoring app built with Streamlit, 
+simulating how UK lenders manage **IFRS 9 / PRA SS1/23 / FCA Consumer Duty** model governance.  
+It demonstrates not only predictive modelling (Logistic Regression & XGBoost) but also **responsible AI practices**: drift tracking (PSI), fairness testing, explainability (SHAP), and compliance-style reporting for executives.
+
 
 ## 🚀Demo: Try live demo here: [SmartLoan Dashboard](https://smartloan-dashboard.streamlit.app)
 
@@ -13,14 +15,15 @@ Financial institutions face both decision-making risks and regulatory/reputation
 - Risk of unfair lending outcomes across customer groups (e.g., income segments, geography).
 - Teams operate in isolation, lacking a single governance framework.
 
-## This project addresses those problems by providing a central monitoring dashboard that:
-- Produces **loan default predictions** and evaluates them with **AUC/KS**.  
-- Tracks **model performance** and alerts when thresholds are breached.  
-- Detects **data drift** via PSI and flags high-risk features.
-- Produces **explainability outputs (SHAP** bar, beeswarm, waterfall plots).
-- Runs **fairness checks** (80% rule before vs after group cut-offs).
-- Uses **MLflow to track experiments**, ensuring reproducible and optimised model development.  
-- Generates **compliance reports** in plain English, with optional **LLM executive summaries**.
+## 👉 How this project aligns with real credit-risk workflows
+This project mirrors how real credit-risk teams operate in financial institutions:
+
+- **Model Development:** Default prediction using Logistic Regression (scorecard-style) and XGBoost (non-linear benchmark).  
+- **Model Monitoring:** PSI-based drift alerts and performance tracking as part of monthly governance packs.  
+- **Fairness & Consumer Duty:** 80% rule check to assess equal outcomes across customer segments.  
+- **Explainability & Validation:** SHAP-based feature interpretation to support internal model validation and audit.  
+- **Regulatory Reporting:** Auto-generated summaries mimicking documentation required under FCA/PRA expectations.  
+
 
 ## Key features
 ### 1. New Batch / Monitoring
@@ -52,6 +55,15 @@ Tests across income groups (income_group_auth) and regions (addr_state), applyin
 Automates compliance reports using rule-based thresholds (PSI, AUC/KS drops, fairness checks). Can also produce concise LLM one-pagers tailored for executives, summarising risks, governance issues, and overall model health.
 
 <img width="532" height="656" alt="image" src="https://github.com/user-attachments/assets/4c0c08a9-5205-415a-9597-a3f6cc20bb09" />
+
+
+### Role Relevance
+This project simulates the practical workflow of a **Credit Risk Analyst / Risk Modeller**:
+- Developing and validating scorecard-style models (PD / default prediction).  
+- Monitoring model stability and documenting governance metrics (PSI, KS, fairness).  
+- Producing regulator-friendly compliance summaries for management review.  
+- Applying **UK regulatory standards** (IFRS 9, PRA SS1/23, FCA Consumer Duty) to model lifecycle management.  
+
 
 
 ### Tech stack section
