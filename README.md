@@ -1,28 +1,28 @@
-# SmartLoan – Credit-Risk Prediction, Governance & Monitoring Dashboard
+# SmartLoan – Credit-Risk Prediction, Governance & AI-Powered Monitoring Dashboard
 
-A lightweight, end-to-end credit-risk prediction and monitoring app built with Streamlit, 
-simulating how UK lenders manage **IFRS 9 / PRA SS1/23 / FCA Consumer Duty** model governance.  
-It demonstrates not only predictive modelling (Logistic Regression & XGBoost) but also **responsible AI practices**: drift tracking (PSI), fairness testing, explainability (SHAP), and compliance-style reporting for executives.
+A lightweight, end-to-end credit-risk prediction and **autonomous monitoring system** built with Streamlit, simulating how UK lenders manage **IFRS 9 / PRA SS1/23 / FCA Consumer Duty** model governance with AI-driven automation.
+It demonstrates not only predictive modelling (Logistic Regression & XGBoost) but also **responsible AI practices** enhanced by an **intelligent monitoring agent**: automated drift tracking (PSI), fairness testing, explainability (SHAP), real-time alerting, and compliance-style reporting for executives.
 
 
 ## 🚀Demo: Try live demo here: [SmartLoan Dashboard](https://smartloan-dashboard.streamlit.app)
 
-## What problem does this solve?
-Financial institutions face both decision-making risks and regulatory/reputational risks if their credit-risk models are **not accurate, monitored, explainable, and fair**.
-- Unreliable predictions may lead to poor lending decisions and financial losses.
-- Models can silently break when data drifts or key inputs go missing.
-- Lack of transparent reporting to senior management and regulators.
-- Risk of unfair lending outcomes across customer groups (e.g., income segments, geography).
-- Teams operate in isolation, lacking a single governance framework.
+## ❓ What problem does this solve?
+Financial institutions face both decision-making and regulatory risks if their credit-risk models are **not accurate, monitored, explainable, and fair**. 
 
-## 👉 How this project aligns with real credit-risk workflows
-This project mirrors how real credit-risk teams operate in financial institutions:
+- Predictions can silently degrade when **data drifts** or key inputs go missing — the AI Agent now **detects and alerts** these issues automatically.  
+- Lack of transparent reporting to management and regulators — the Agent **auto-generates compliance reports** aligned to FCA/PRA expectations.  
+- Risk of **unfair lending outcomes** across customer groups (e.g., income segments, geography) — the Agent continuously **audits fairness** using the 80% rule.  
+- Teams often operate in isolation, lacking a central governance process — the Agent provides **centralised, automated oversight** and alerting.
 
-- **Model Development:** Default prediction using Logistic Regression (scorecard-style) and XGBoost (non-linear benchmark).  
-- **Model Monitoring:** PSI-based drift alerts and performance tracking as part of monthly governance packs.  
-- **Fairness & Consumer Duty:** 80% rule check to assess equal outcomes across customer segments.  
-- **Explainability & Validation:** SHAP-based feature interpretation to support internal model validation and audit.  
-- **Regulatory Reporting:** Auto-generated summaries mimicking documentation required under FCA/PRA expectations.  
+## 👉 How this aligns with real credit-risk workflows
+This project mirrors how **modern, automated credit-risk teams** operate in financial institutions:  
+
+- **Model Development:** Default prediction using Logistic Regression (scorecard-style) and XGBoost (non-linear benchmark), tracked with MLflow for version control.  
+- **Automated Monitoring:** The AI Agent performs **continuous PSI-based drift detection**, anomaly monitoring, and model performance tracking,generating monthly governance packs without manual effort.  
+- **Fairness & Consumer Duty Compliance:** **80%-rule fairness checks** assess equal outcomes across customer segments and flag potential Consumer Duty breaches.  
+- **Explainability & Validation:** SHAP-based feature interpretation with agent-generated summaries supports internal model validation and audits.  
+- **Regulatory Reporting:** Agent automatically produces **FCA/PRA-style compliance documentation** covering drift, fairness, and performance metrics for governance reviews.  
+
 
 
 ## Key features
