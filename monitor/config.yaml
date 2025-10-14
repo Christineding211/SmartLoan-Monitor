@@ -1,0 +1,50 @@
+# monitor/config.yaml
+
+run_name: "daily_batch"
+
+# ===== CRITICAL: Label/Score Column Names =====
+labels:
+  y_col: "label"   # Actual outcomes (from y_true)
+  p_col: "score"   # Model predictions (from pd_score)
+
+# ===== Drift & Performance Thresholds =====
+psi_threshold_warn: 0.1
+psi_threshold_alert: 0.2
+auc_drop_alert: 0.05
+ks_drop_alert: 0.10
+missing_rate_alert: 0.10
+
+# ===== Monitoring Features =====
+features:
+  numerical: 
+    - "int_rate"
+    - "dti"
+    - "fico_mid"
+    - "installment_to_income"
+    - "log_loan_amnt"
+    - "log_annual_inc"
+    - "credit_history_length"
+  categorical: 
+    - "grade"
+    - "home_ownership"
+    - "term"
+
+# ===== Baseline Performance Metrics =====
+baseline:
+  roc_auc: 0.709
+  ks: 0.31
+
+# ===== Fairness Checks =====
+fairness:
+  group_col: "income_group_auth"
+  p80_rule_enforce: true
+  min_group_size: 200
+
+# ===== Output & Logging =====
+report:
+  out_dir: "monitor/reports"
+  log_csv: "monitor/metrics_log.csv"
+
+# ===== Data Source (Optional) =====
+data_source:
+  daily_file_pattern: "data/new_batch_*.csv"

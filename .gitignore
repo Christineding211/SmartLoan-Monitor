@@ -1,0 +1,12 @@
+# Generated monitoring outputs
+monitor/batch_metrics_log.csv
+monitor/metrics_log.csv
+monitor/reference_stats.pkl
+monitor/reports/*.md
+*.csv
+*.pkl
+
+# Python cache and system files
+__pycache__/
+*.pyc
+.DS_Store

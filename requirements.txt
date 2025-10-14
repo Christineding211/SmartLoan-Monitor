@@ -1,0 +1,17 @@
+
+pandas
+numpy
+scikit-learn
+matplotlib
+seaborn
+xgboost
+lightgbm
+shap
+jupyter
+notebook
+joblib
+scipy
+mlflow
+streamlit
+pyyaml
+jinja2
