@@ -33,9 +33,9 @@ Upload a new CSV batch and instantly compute metrics (AUC/KS), drift (PSI), and 
 
 
 ### 2.Metrics & Drift
-Visualises top-K drifted features with PSI, using OK/WARN/ALERT thresholds from config.yaml. Helps spot early warning signs before model degradation.
+Autonomous monitoring agent that tracks model drift (PSI), performance metrics (AUC/KS), and fairness compliance, generating automated alerts and governance reports
 
-<img width="652" height="657" alt="image" src="https://github.com/user-attachments/assets/d753ac82-3005-4fd7-919d-a3a1051358c5" />
+<img width="1025" height="587" alt="image" src="https://github.com/user-attachments/assets/d50b1e4f-7df7-44d3-b03a-20e90daa0269" />
 
 
 
@@ -46,26 +46,35 @@ Generates SHAP plots (bar, beeswarm, and waterfall ) for both Logistic Regressio
 
 
 ### 4. Fairness
-Tests across income groups (income_group_auth) and regions (addr_state), applying the 80% rule before and after group-specific cut-offs. Shows approval rates and TPR_good snapshots to highlight fairness gaps.
+Interactive fairness audit dashboard that compares global vs group-specific thresholds, measures 80% rule (Disparate Impact Ratio) and TPR parity across income groups, ensuring equitable lending outcomes aligned with FCA Consumer Duty standards.
 
-<img width="509" height="682" alt="image" src="https://github.com/user-attachments/assets/136e4b30-2b97-41cd-81db-f4d8342f87c4" />
+<img width="1116" height="664" alt="image" src="https://github.com/user-attachments/assets/fe2d5bef-df85-409d-b74f-5155a1d89091" />
 
 
 ### 5. Compliance & LLM
 Automates compliance reports using rule-based thresholds (PSI, AUC/KS drops, fairness checks). Can also produce concise LLM one-pagers tailored for executives, summarising risks, governance issues, and overall model health.
 
-<img width="532" height="656" alt="image" src="https://github.com/user-attachments/assets/4c0c08a9-5205-415a-9597-a3f6cc20bb09" />
+<img width="1104" height="560" alt="image" src="https://github.com/user-attachments/assets/f046d743-7ec3-485c-8794-424a3d134279" />
+
+
+### 6. AI Agent Chat
+Conversational AI agent that monitors model health, automatically detects drift and performance issues, prioritises risks, and delivers actionable governance recommendations through natural language interaction.
+
+<img width="1251" height="776" alt="image" src="https://github.com/user-attachments/assets/738f7d34-82af-4061-8d28-0c991b4c2b2b" />
+
 
 
 ### Role Relevance
-This project simulates the practical workflow of a **Credit Risk Analyst / Risk Modeller**:
-- Developing and validating scorecard-style models (PD / default prediction).  
-- Monitoring model stability and documenting governance metrics (PSI, KS, fairness).  
-- Producing regulator-friendly compliance summaries for management review.  
-- Applying **UK regulatory standards** (IFRS 9, PRA SS1/23, FCA Consumer Duty) to model lifecycle management.  
+This project simulates the practical workflow of a **Credit Risk Analyst / Risk Modeller:**
+
+- Developing and validating scorecard-style models (PD / default prediction).
+- Monitoring model stability and documenting governance metrics (PSI, KS, fairness).
+- **Deploying AI-powered automation** for continuous model monitoring and intelligent alerting.
+- Producing regulator-friendly compliance summaries for management review.
+- Applying **UK regulatory standards** (IFRS 9, PRA SS1/23, FCA Consumer Duty) to model lifecycle management. 
 
 
 
 ### Tech stack section
-Streamlit · Python (pandas, numpy, scikit-learn) · SHAP · Jinja2 · MLflow 
+Streamlit · Python (pandas, numpy, scikit-learn) · SHAP · Jinja2 · MLflow · OpenAI GPT-4o mini · LangChain
 
