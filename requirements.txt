@@ -15,3 +15,5 @@ mlflow
 streamlit
 pyyaml
 jinja2
+openai
+
