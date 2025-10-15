@@ -1,4 +1,3 @@
-
 pandas
 numpy
 scikit-learn
@@ -16,4 +15,6 @@ streamlit
 pyyaml
 jinja2
 openai
+langchain-openai
+langchain
 
