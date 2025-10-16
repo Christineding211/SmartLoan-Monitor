@@ -1,6 +1,6 @@
 # SmartLoan – Credit-Risk Prediction, Governance & AI-Powered Monitoring Dashboard
 
-A lightweight, end-to-end credit-risk prediction and **autonomous monitoring system** built with Streamlit, simulating how UK lenders manage **IFRS 9 / PRA SS1/23 / FCA Consumer Duty** model governance with AI-driven automation.
+A lightweight, end-to-end credit-risk prediction and **autonomous monitoring system** built with Streamlit, simulating how lenders manage **IFRS 9 / PRA SS1/23 / FCA Consumer Duty** model governance with AI-driven automation.
 It demonstrates not only predictive modelling (Logistic Regression & XGBoost) but also **responsible AI practices** enhanced by an **intelligent monitoring agent**: automated drift tracking (PSI), fairness testing, explainability (SHAP), real-time alerting, and compliance-style reporting for executives.
 
 
@@ -71,7 +71,7 @@ This project simulates the practical workflow of a **Credit Risk Analyst / Risk 
 - Monitoring model stability and documenting governance metrics (PSI, KS, fairness).
 - **Deploying AI-powered automation** for continuous model monitoring and intelligent alerting.
 - Producing regulator-friendly compliance summaries for management review.
-- Applying **UK regulatory standards** (IFRS 9, PRA SS1/23, FCA Consumer Duty) to model lifecycle management. 
+- Applying **regulatory standards** (IFRS 9, PRA SS1/23, FCA Consumer Duty) to model lifecycle management. 
 
 
 
