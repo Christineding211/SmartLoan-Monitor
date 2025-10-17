@@ -1,18 +1,17 @@
 # SmartLoan – Credit-Risk Prediction, Governance & AI-Powered Monitoring Dashboard
-
-A lightweight, end-to-end credit-risk prediction and **autonomous monitoring system** built with Streamlit, simulating how lenders manage **IFRS 9 / PRA SS1/23 / FCA Consumer Duty** model governance with AI-driven automation.
-It demonstrates not only predictive modelling (Logistic Regression & XGBoost) but also **responsible AI practices** enhanced by an **intelligent monitoring agent**: automated drift tracking (PSI), fairness testing, explainability (SHAP), real-time alerting, and compliance-style reporting for executives.
+Lightweight, end-to-end demo showing how lenders embed **SS1/23, IFRS 9**, and **Consumer Duty** requirements: **PD models** (Logistic Regression, XGBoost) with **audit-ready MI**—PSI drift monitoring, fairness checks, **SHAP explainability**, automated alerting, and compliance-style monthly reports.
 
 
 ## 🚀Demo: Try live demo here: [SmartLoan Dashboard](https://smartloan-dashboard.streamlit.app)
 
-## ❓ What problem does this solve?
+## 🎯  What problem does this solve?
 Financial institutions face both decision-making and regulatory risks if their credit-risk models are **not accurate, monitored, explainable, and fair**. 
 
 - Predictions can silently degrade when **data drifts** or key inputs go missing — the AI Agent now **detects and alerts** these issues automatically.  
 - Lack of transparent reporting to management and regulators — the Agent **auto-generates compliance reports** aligned to FCA/PRA expectations.  
 - Risk of **unfair lending outcomes** across customer groups (e.g., income segments, geography) — the Agent continuously **audits fairness** using the 80% rule.  
 - Teams often operate in isolation, lacking a central governance process — the Agent provides **centralised, automated oversight** and alerting.
+
 
 ## 👉 How this aligns with real credit-risk workflows
 This project mirrors how **modern, automated credit-risk teams** operate in financial institutions:  
