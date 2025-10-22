@@ -5,9 +5,10 @@ Simple LangChain agent that orchestrates monitoring tools
 """
 import os
 from langchain_openai import ChatOpenAI
-from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.messages import HumanMessage, AIMessage
+from langchain.agents import create_tool_calling_agent
+from langchain.agents.agent import AgentExecutor
 
 from .agent_tools import (
     run_new_batch_processing,
