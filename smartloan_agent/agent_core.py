@@ -1,4 +1,3 @@
-
 """
 AI-Powered ML Governance Agent
 Simple LangChain agent that orchestrates monitoring tools
@@ -7,8 +6,14 @@ import os
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.messages import HumanMessage, AIMessage
-from langchain.agents import create_tool_calling_agent
-from langchain.agents import AgentExecutor
+
+# 修正：使用正確的導入路徑
+try:
+    from langchain.agents import AgentExecutor, create_tool_calling_agent
+except ImportError:
+    # 如果上面失敗，嘗試新版本的路徑
+    from langchain.agents.agent import AgentExecutor
+    from langchain.agents import create_tool_calling_agent
 
 from .agent_tools import (
     run_new_batch_processing,
@@ -53,7 +58,7 @@ class GovernanceAgent:
                 "No API key found. Set OPENAI_API_KEY in .env file or pass api_key parameter."
             )
         
-        # CHANGED: Use OpenAI instead of Anthropic
+        # Use OpenAI
         self.llm = ChatOpenAI(
             model="gpt-4o-mini",  # Fast and cheap for development
             temperature=0,
