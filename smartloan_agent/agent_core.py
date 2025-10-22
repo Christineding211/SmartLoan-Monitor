@@ -1,13 +1,12 @@
-
 """
 AI-Powered ML Governance Agent
-Simple LangChain agent that orchestrates monitoring tools
+Updated for LangChain 1.0+ using LangGraph
 """
 import os
+from typing import TypedDict, Annotated, Sequence
 from langchain_openai import ChatOpenAI
-from langchain.agents import AgentExecutor, create_tool_calling_agent
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.messages import HumanMessage, AIMessage
+from langchain_core.messages import BaseMessage, HumanMessage, AIMessage
+from langgraph.prebuilt import create_react_agent
 
 from .agent_tools import (
     run_new_batch_processing,
@@ -42,7 +41,7 @@ Be concise, actionable, and always explain what metrics mean."""
 
 
 class GovernanceAgent:
-    """AI agent for ML governance using OpenAI"""
+    """AI agent for ML governance using OpenAI and LangGraph"""
     
     def __init__(self, api_key: str = None):
         self.api_key = api_key or os.getenv("OPENAI_API_KEY")
@@ -52,9 +51,9 @@ class GovernanceAgent:
                 "No API key found. Set OPENAI_API_KEY in .env file or pass api_key parameter."
             )
         
-        # CHANGED: Use OpenAI instead of Anthropic
+        # Use OpenAI
         self.llm = ChatOpenAI(
-            model="gpt-4o-mini",  # Fast and cheap for development
+            model="gpt-4o-mini",
             temperature=0,
             api_key=self.api_key
         )
@@ -67,26 +66,30 @@ class GovernanceAgent:
             run_new_batch_processing
         ]
         
-        prompt = ChatPromptTemplate.from_messages([
-            ("system", SYSTEM_PROMPT),
-            ("human", "{input}"),
-            ("placeholder", "{agent_scratchpad}")
-        ])
-        
-        agent = create_tool_calling_agent(self.llm, self.tools, prompt)
-        self.agent_executor = AgentExecutor(
-            agent=agent,
+        # Create agent using LangGraph's create_react_agent
+        self.agent = create_react_agent(
+            model=self.llm,
             tools=self.tools,
-            verbose=True,
-            max_iterations=10,
-            handle_parsing_errors=True
+            prompt=SYSTEM_PROMPT
         )
     
     def chat(self, user_message: str) -> str:
         """Chat with the agent"""
         try:
-            result = self.agent_executor.invoke({"input": user_message})
-            return result.get("output", "I couldn't process that request.")
+            # Invoke the agent
+            result = self.agent.invoke({
+                "messages": [HumanMessage(content=user_message)]
+            })
+            
+            # Extract the last message (AI's response)
+            if result and "messages" in result:
+                last_message = result["messages"][-1]
+                if hasattr(last_message, 'content'):
+                    return last_message.content
+                return str(last_message)
+            
+            return "I couldn't process that request."
+            
         except Exception as e:
             return f"Error: {str(e)}"
     
@@ -113,8 +116,12 @@ class GovernanceAgent:
 # Convenience function for quick testing
 def test_agent():
     """Test the agent with a simple query"""
+    print("Initializing agent...")
     agent = GovernanceAgent()
+    
+    print("Sending test query...")
     response = agent.chat("What's the current model performance?")
+    
     print("\n" + "="*50)
     print("Agent Response:")
     print("="*50)
